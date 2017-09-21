@@ -8,7 +8,7 @@ const SLIDE_DATA = [
 ];
 
 class WelcomeScreen extends Component {
-    onSildesComplete = () => {
+    onSlidesComplete = () => {
         console.log(this);
         const { navigate } = this.props.navigation;
         navigate('auth');
@@ -18,7 +18,7 @@ class WelcomeScreen extends Component {
         return (
             <Slides 
                 data={SLIDE_DATA}
-                onComplete={this.onSildesComplete()}
+                onComplete={this.onSlidesComplete}
             />
         );
     }

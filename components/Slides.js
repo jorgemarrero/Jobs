@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Slides extends Component {
+    scrollX = new Animated.Value(0);
+
     renderLastSlide(i) {
         if (i === this.props.data.length - 1) {
             return (
@@ -34,7 +36,7 @@ class Slides extends Component {
     }
 
     renderDots() {
-        const position = Animated.divide(new Animated.Value(0), SCREEN_WIDTH);
+        let position = Animated.divide(this.scrollX, SCREEN_WIDTH);
 
         return this.props.data.map((_, i) => { 
             const opacity = position.interpolate({
@@ -53,7 +55,7 @@ class Slides extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <ScrollView
                     horizontal
                     pagingEnabled
@@ -68,7 +70,9 @@ class Slides extends Component {
                 </ScrollView>
                 
                 <View style={{ flexDirection: 'row' }}>
-                    {this.renderDots()}
+                    {
+                        this.renderDots()
+                    }
                 </View>
             </View>
         );
