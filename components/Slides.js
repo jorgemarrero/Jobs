@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Slides extends Component {
+    scrollX = new Animated.Value(0);
+
     renderLastSlide(i) {
         if (i === this.props.data.length - 1) {
             return (
@@ -15,27 +17,30 @@ class Slides extends Component {
                     containerViewStyle={styles.containerButtonStyle}
                     onPress={this.props.onComplete}
                 />
-            );
+                );
+            }
         }
-    }
-
-    renderSlides() {
-        return this.props.data.map((slide, i) => {
-            return (
-                <View 
+        
+        renderSlides() {
+            return this.props.data.map((slide, i) => {
+                return (
+                    <View 
                     key={slide.text}
                     style={[styles.slideStyle, { backgroundColor: slide.color }]}
-                >
+                    >
                     <Text style={styles.textStyle}>{slide.text}</Text>
                     {this.renderLastSlide(i)}
+                    <View style={{ flexDirection: 'row' }}>
+                        { this.renderDots() }
+                    </View>
                 </View>
             );
         });
     }
-
+    
     renderDots() {
-        const position = Animated.divide(new Animated.Value(0), SCREEN_WIDTH);
-
+        const position = Animated.divide(this.scrollX, SCREEN_WIDTH);
+        
         return this.props.data.map((_, i) => { 
             const opacity = position.interpolate({
                 inputRange: [i - 1, i, i + 1],
@@ -44,19 +49,19 @@ class Slides extends Component {
             });
             return (
                 <Animated.View
-                    key={i}
-                    style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius: 5 }}
+                key={i}
+                style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius: 5 }}
                 />
             );
         });
     }
-
+    
     render() {
         return (
-            <View>
-                <ScrollView
-                    horizontal
-                    pagingEnabled
+            <View style={{ flex: 1 }}>
+            <ScrollView
+            horizontal
+            pagingEnabled
                     style={{ flex: 1 }}
                     showsHorizontalScrollIndicator={false}
                     onScroll={Animated.event( 
@@ -66,10 +71,6 @@ class Slides extends Component {
                 >
                     {this.renderSlides()}
                 </ScrollView>
-                
-                <View style={{ flexDirection: 'row' }}>
-                    {this.renderDots()}
-                </View>
             </View>
         );
     }
