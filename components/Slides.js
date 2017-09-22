@@ -68,7 +68,7 @@ class Slides extends Component {
                     [{ nativeEvent: { contentOffset: { x: this.scrollX } } }] 
                     )}
                     scrollEventThrottle={16} 
-                >
+            >
                     {this.renderSlides()}
                 </ScrollView>
             </View>
