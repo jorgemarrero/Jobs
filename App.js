@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
 
+import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
@@ -26,18 +27,20 @@ export default class App extends React.Component {
 					}
 				}, {
 					tabBarPosition: 'bottom',
-					lazyLoad: true
+					lazy: true
 				})
 			}
 		}, {
 			tabBarPosition: 'bottom',
-			lazyLoad: true,
+			lazy: true,
 			swipeEnabled: false,
 			animationEnabled: false
 		}
 		);
 		return (
-			<MainNavigator />
+			<Provider store={store}>
+				<MainNavigator />
+			</Provider>
 		);
 	}
 }
