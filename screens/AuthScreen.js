@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class AuthScreen extends Component {
-    componentDidMount() {
+    componentDidMount() {        
         this.props.facebookLogin();
         this.onAuthComplete(this.props); // it's not necessary
     }
