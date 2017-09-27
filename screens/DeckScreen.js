@@ -22,7 +22,6 @@ class DeckScreen extends Component {
                         scrollEnabled={false}
                         style={{ flex: 1 }}
                         liteMode
-                        onSwipeRight={job => this.props.likeJob(job)}
                         initialRegion={initialRegion}
                     />
                 </View>
@@ -37,9 +36,16 @@ class DeckScreen extends Component {
         );
     }
 
-    renderNoMoreCards() {
+    renderNoMoreCards = () => {
         return (
-            <Card title="No more jobs">
+            <Card title="No More Jobs">
+                <Button
+                    title="Back To Map"
+                    large
+                    icon={{ name: 'my-location' }}
+                    backgroundColor="#03A9F4"
+                    onPress={() => this.props.navigation.goBack()}
+                />
             </Card>
         )
     }
@@ -51,6 +57,7 @@ class DeckScreen extends Component {
                     data={this.props.jobs}
                     renderCard={this.renderCard}
                     renderNoMoreCards={this.renderNoMoreCards}
+                    onSwipeRight={(job) => this.props.likeJob(job)}
                     keyProp="jobkey"
                 />
             </View>

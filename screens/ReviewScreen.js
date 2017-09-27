@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Platform, ScrollView } from 'react-native';
+import { View, Text, Platform, ScrollView, Linking } from 'react-native';
 import { Button, Card } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { MapView } from 'expo';
 
 class ReviewScreen extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -23,13 +24,35 @@ class ReviewScreen extends Component {
 
     renderLikedJobs() {
         return this.props.likedJobs.map(job => {
+            const {
+                company, formattedRelativeTime, url, longitude, latitude, jobtitle, jobkey
+            } = job;
+
+            const initialRegion = {
+                longitude,
+                latitude,
+                longitudeDelta: 0.02,
+                latitudeDelta: 0.045
+            };
+
             return (
-                <Card>
-                    <View styles={{ height: 200 }}>
+                <Card title={jobtitle} key={jobkey}>
+                    <View style={{ height: 200 }}>
+                        <MapView
+                            scrollEnabled={false}
+                            style={{ flex: 1 }}
+                            liteMode
+                            initialRegion={initialRegion}
+                        />
                         <View style={styles.detailWrapper}>
-                            <Text styles={styles.italic}>{job.company}</Text>
-                            <Text styles={styles.italic}>{job.formattedRelativeTime}</Text>
+                            <Text styles={styles.italic}>{company}</Text>
+                            <Text styles={styles.italic}>{formattedRelativeTime}</Text>
                         </View>
+                        <Button
+                            title="Apply Now!"
+                            backgroundColor="#03A9F4"
+                            onPress={() => Linking.openURL(url)}
+                        />
                     </View>
                 </Card>
             );
@@ -49,7 +72,8 @@ const styles = {
     detailWrapper: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 10
     },
     italics: {
         fontStyle: 'italic'
@@ -57,7 +81,6 @@ const styles = {
 };
 
 function mapStateToProps(state) {
-    console.log(state);
     console.log(state.likedJobs);
     return { likedJobs: state.likedJobs };
 }
