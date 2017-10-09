@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Platform, ScrollView, Linking } from 'react-native';
-import { Button, Card } from 'react-native-elements';
+import { Button, Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
 
@@ -8,6 +8,9 @@ class ReviewScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: 'Review Jobs',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="favorite" size={22} color={tintColor} />
+            ),
             headerRight: (
                 <Button 
                     title="Settings"

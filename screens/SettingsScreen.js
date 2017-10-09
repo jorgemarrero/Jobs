@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { clearLikedJobs } from '../actions';
 
 class SettingsScreen extends Component {
+    static navigationOptions = {
+        headerStyle: {
+            marginTop: Platform.OS === 'android' ? 24 : 0
+        }
+    }
     render() {
         return (
-            <View>
+            <View style={{ paddingTop: 62 }}>
                 <Button
                     title="Reset Liked Jobs"
                     large

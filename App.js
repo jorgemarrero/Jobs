@@ -23,7 +23,10 @@ export default class App extends React.Component {
 			}
 		}, {
 			tabBarPosition: 'bottom',
-			lazy: false
+			lazy: false,
+			tabBarOptions: {
+				showIcon: true
+			}
 		});
 		
 		const MainNavigator = StackNavigator({
